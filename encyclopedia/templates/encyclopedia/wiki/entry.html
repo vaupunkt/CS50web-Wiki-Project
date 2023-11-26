@@ -1,0 +1,7 @@
+{% extends "encyclopedia/layout.html" %} {% block title %} Encyclopedia
+{%endblock %} {% block body %}
+<div>
+  <a href="/edit/{{entryTitle}}"><button>Edit Entry</button></a>
+  <a href="/delete/{{entryTitle}}"><button>🚮 Delete Entry</button></a>
+</div>
+{{entry |safe}} {% endblock %}
