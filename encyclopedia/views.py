@@ -23,10 +23,17 @@ def index(request):
     })
     
 def entry(request, entry):
+    entry_content = util.get_entry(entry)
+    if entry_content is None:
+        get_entry = "not_found"
+    else:
+        get_entry = markdown2.markdown(entry_content)
     return render(request, "encyclopedia/wiki/entry.html", {
         "entryTitle": entry,
-        "entry": markdown2.markdown(util.get_entry(entry)), "form": SearchForm()
+        "entry": get_entry,
+        "form": SearchForm()
     })
+
 
 def search(request):
     

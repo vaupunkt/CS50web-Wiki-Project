@@ -1,7 +1,15 @@
-{% extends "encyclopedia/layout.html" %} {% block title %} Encyclopedia
-{%endblock %} {% block body %}
-<div>
-  <a href="/edit/{{entryTitle}}"><button>Edit Entry</button></a>
-  <a href="/delete/{{entryTitle}}"><button>🚮 Delete Entry</button></a>
-</div>
-{{entry |safe}} {% endblock %}
+{% extends 'encyclopedia/layout.html' %} {% block title %}
+  Encyclopedia
+{% endblock %} {% block body %}
+  {% if entry == 'not_found' %}
+    <h1>404</h1>
+    <h2>Entry not found</h2>
+    <a href="{% url 'new' %}"><button>Create New Entry</button></a>
+  {% else %}
+    <div>
+      <a href="/edit/{{ entryTitle }}"><button>Edit Entry</button></a>
+      <a href="/delete/{{ entryTitle }}"><button>🚮 Delete Entry</button></a>
+    </div>
+    {{ entry|safe }}
+  {% endif %}
+{% endblock %}

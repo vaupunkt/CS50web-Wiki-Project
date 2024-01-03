@@ -1,10 +1,13 @@
-{% extends "encyclopedia/layout.html" %} {% block title %} Encyclopedia
-{%endblock %} {% block body %} {% if error %}
-<h2>error: {{ error }}</h2>
-{% else %}
-<h1>New Entry</h1>
-<form action="{% url 'new' %}" method="post">
-  {% csrf_token %} {{ newEntryForm }}
-  <input type="submit" value="💾 Create new Entry" />
-</form>
-{% endif %} {% endblock %}
+{% extends 'encyclopedia/layout.html' %} {% block title %}
+  Encyclopedia
+{% endblock %} {% block body %}
+  {% if error %}
+    <h2>error: {{ error }}</h2>
+  {% else %}
+    <h1>New Entry</h1>
+    <form action="{% url 'new' %}" class="createForm" method="post">
+      {% csrf_token %} {{ newEntryForm }}
+      <input type="submit" value="💾 Create new Entry" />
+    </form>
+  {% endif %}
+{% endblock %}

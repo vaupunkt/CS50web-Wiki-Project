@@ -51,27 +51,34 @@ button:hover {
   background-color: #e0e0e0;
 }
 
-.editForm > form {
+form {
   display: flex;
   flex-direction: column;
   margin-right: auto;
-
+  gap: 15px;
   width: 80%;
 }
 
-.editForm > form > label {
+form > label {
   margin-top: 15px;
 }
 
-.editForm > form > input {
+form > input {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #e0e0e0;
   margin-right: auto;
 }
 
-.editForm > form > textarea {
+form > textarea {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #e0e0e0;
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 600px;
 }
