@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django import forms
 import markdown2
 import random
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from . import util
 
@@ -76,9 +78,7 @@ def new(request):
                 })
             else:   
                 util.save_entry(title, content)
-                return render(request, "encyclopedia/wiki/entry.html", {
-                    "entry": markdown2.markdown(util.get_entry(title)), "form": SearchForm()
-                })
+                return HttpResponseRedirect(reverse("entry", args=(title,)))
     return render(request, "encyclopedia/new.html", {
         "entries": util.list_entries(), "form": SearchForm(),
         "newEntryForm": NewEntryForm()
@@ -90,20 +90,18 @@ def edit(request, entry):
         if newEntryForm.is_valid():
             title = newEntryForm.cleaned_data["title"]
             content = newEntryForm.cleaned_data["content"]
+            util.delete_entry(entry)
             util.save_entry(title, content)
-            return render(request, "encyclopedia/wiki/entry.html", {
-                "entry": markdown2.markdown(util.get_entry(title)), "form": SearchForm()
-            })
-    return render(request, "encyclopedia/edit/entry.html", {
-        "entry": entry, "form": SearchForm(),
-        "editEntryForm": EditEntryForm(initial={'title': entry, 'content': util.get_entry(entry)})
-    })
+            return HttpResponseRedirect(reverse("entry", args=(title,)))
+    else:        
+        return render(request, "encyclopedia/edit/entry.html", {
+            "entry": entry, "form": SearchForm(),
+            "editEntryForm": EditEntryForm(initial={'title': entry, 'content': util.get_entry(entry)})
+        })
     
 def delete(request, entry):
     util.delete_entry(entry)
-    return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries(), "form": SearchForm()
-    })
+    return HttpResponseRedirect(reverse("index"))
     
 def randomEntry(request):
     entry = random.choice(util.list_entries())
